@@ -1,5 +1,15 @@
 package Menu;
 class MenuItem {
+    /**************************************
+     *      D O N ' T   T O U C H
+     *     /                       \
+     *    /    T H I S   F I L E   \
+     *   /                           \
+     *  /                             \
+     * /                               \
+     * ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
+     **************************************/
+
     String label;
     Runnable action;
     Menu subMenu;

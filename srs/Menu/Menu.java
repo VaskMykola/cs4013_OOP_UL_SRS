@@ -8,6 +8,16 @@ import java.util.Scanner;
 
 // Represents a menu with multiple items
 class Menu {
+    /**************************************
+     *      D O N ' T   T O U C H
+     *     /                       \
+     *    /    T H I S   F I L E   \
+     *   /                           \
+     *  /                             \
+     * /                               \
+     * ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
+     **************************************/
+
     List<MenuItem> items = new ArrayList<>();
     String title;
 
