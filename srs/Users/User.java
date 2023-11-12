@@ -32,10 +32,7 @@ public class User {
             scanner.useDelimiter(DELIMITER);
             while (scanner.hasNext()) {
                 String[] fields = scanner.nextLine().split(DELIMITER);
-//                TODO delete this line, after testing with print fields
-//                int i = 0;
-//                System.out.println("field " + i + ": " + fields[0] + " " + fields[1] + " " + fields[2]);
-//                i++;
+
                 if (fields[0].equals(this.login) && fields[1].equals(this.password) && fields[2].equals(this.role)) {
                     this.userID = fields[3];
                     return true;
@@ -87,11 +84,21 @@ public class User {
             if (oldPassword.equals(this.password)) {
                 this.password = newPassword;
                 System.out.println("Password changed successfully");
+
                 break;
             } else {
                 System.out.println("Wrong password");
             }
         }
+    }
+
+    public void showProfileInfo() {
+        // TODO show profile info, needs more like name, surname, email, phone number, address, bank details but does each role have all of this?
+        System.out.println("Profile info:");
+        System.out.println("Login: " + this.login);
+        System.out.println("Password: " + this.password); // TODO should i level this here?
+        System.out.println("Role: " + this.role);
+        System.out.println("User ID: " + this.userID);
     }
 
 

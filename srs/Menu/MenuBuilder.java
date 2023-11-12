@@ -17,23 +17,31 @@ public class MenuBuilder {
 
     public static void studentMenu() {
         Menu studentMenu = new Menu("Student Menu");
+
         studentMenu.addItem(new MenuItem("show a transcript",
                 // TODO function to generate a student transcript
                 () -> System.out.println("show a transcript selected")));
+
         studentMenu.addItem(new MenuItem("View programme details",
                 // TODO function to view programme details
                 () -> System.out.println("View programme details selected")));
-        studentMenu.addItem(new MenuItem("Profile settings",
+
+        studentMenu.addItem(new MenuItem("Profile info & settings",
                 // TODO function to view profile settings
                 () -> System.out.println("Profile settings selected")));
+
         studentMenu.addItem(new MenuItem("View academic calendar",
                 // TODO function to view academic calendar
                 () -> System.out.println("View academic calendar selected")));
+
         studentMenu.addItem(new MenuItem("Module selection and other",
                 // TODO function to view module selection and other
                 () -> System.out.println("Module selection and other selected")));
 
         // TODO subMenus
+
+
+        studentMenu.display();
 
     }
 
