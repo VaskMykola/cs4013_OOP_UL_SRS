@@ -25,7 +25,7 @@ class MarkingSchemeReader {
                         lineData[0],
                         lineData[1],
                         lineData[2].equals("–") ? -1 : Double.parseDouble(lineData[2]),
-                        lineData[3] == "Yes"));
+                        lineData[3].equals("Yes")));
             }
             gradeArrayList.forEach(System.out::println);
 
@@ -34,6 +34,29 @@ class MarkingSchemeReader {
             System.out.println(e);
         }
         return gradeArrayList;
+    }
+}
+
+/**
+ *
+ */
+class CSVFileReader {
+    /**
+     * @param filepath of the csv file
+     * @return an ArrayList containing each line from the file as a separate String object
+     */
+    public static ArrayList<String> readFile(String filepath) {
+        ArrayList<String> fileData = new ArrayList<>();
+        try {
+            Scanner scanner = new Scanner(new File(filepath));
+             while (scanner.hasNextLine()) {
+                 String line = scanner.nextLine();
+                 fileData.add(line);
+             }
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        return fileData;
     }
 }
 
@@ -61,6 +84,6 @@ class Grade {
     }
 
     public static void main(String[] args) {
-        QCACalculator qcaCalculator = new QCACalculator("/Users/oleksandrkardash/IdeaProjects/cs4013_OOP_UL_SRS/srs/academicGrades.csv");
+        CSVFileReader.readFile("/Users/oleksandrkardash/IdeaProjects/cs4013_OOP_UL_SRS/csvFiles/users.csv").forEach(System.out::println);
     }
 }
