@@ -1,19 +1,7 @@
 package Menu;
 
-import Users.User;
 
 public class MenuBuilder {
-    public static void buildTestMenu() {
-        Menu mainMenu = new Menu("Menu.MenuBuilder Menu");
-        Menu subMenu1 = new Menu("SubMenu 1");
-
-        mainMenu.addItem(new MenuItem("Option 1", () -> System.out.println("Option 1 selected")));
-        mainMenu.addItem(new MenuItem("SubMenu", subMenu1));
-
-        subMenu1.addItem(new MenuItem("Sub option 1", () -> System.out.println("Sub option 1 selected")));
-
-        mainMenu.display();
-    }
 
     public static void studentMenu() {
         Menu studentMenu = new Menu("Student Menu");
@@ -126,18 +114,7 @@ public class MenuBuilder {
     public static void loginMenu() {
         // TODO create additional fucntion to check data with data from db
         Menu loginMenu = new Menu("Login Menu");
-        loginMenu.addItem(new MenuItem("Login as a student",
-                // TODO function to login as a student
-                () -> System.out.println("Login as a student selected")));
-        loginMenu.addItem(new MenuItem("Login as a faculty",
-                // TODO function to login as a faculty
-                () -> System.out.println("Login as a faculty selected")));
-        loginMenu.addItem(new MenuItem("Login as a department",
-                // TODO function to login as a department
-                () -> System.out.println("Login as a department selected")));
-        loginMenu.addItem(new MenuItem("Login as a admin",
-                // TODO function to login as a admin
-                () -> System.out.println("Login as a admin selected")));
+        loginMenu.addItem(new MenuItem("Login", () -> System.out.println("todo")));
         loginMenu.display();
     }
 

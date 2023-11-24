@@ -11,12 +11,12 @@ class MenuItem {
      **************************************/
 
     String label;
-    Runnable action;
+    Runnable func_to_run;
     Menu subMenu;
 
-    public MenuItem(String label, Runnable action) {
+    public MenuItem(String label, Runnable func_to_run) {
         this.label = label;
-        this.action = action;
+        this.func_to_run = func_to_run;
     }
 
     public MenuItem(String label, Menu subMenu) {
