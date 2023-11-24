@@ -44,7 +44,7 @@ class Menu {
                 if (selectedItem.subMenu != null) {
                     selectedItem.subMenu.display();
                 } else {
-                    selectedItem.action.run();
+                    selectedItem.func_to_run.run();
                 }
             } else {
                 System.out.println("Invalid option. Try again.");
