@@ -2,12 +2,11 @@ package Menu;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class CSVHandler {
-    private final ArrayList<String> tableData;
+    private static final String CSV_DELIMITER = ",";
+    private final List<String> tableData;
     private final HashMap<String, Integer> columnHeaders;
 
 
@@ -16,15 +15,15 @@ public class CSVHandler {
         columnHeaders = extractColumnHeaders(tableData.get(0)); // use the first row from the table to set column headers
         tableData.remove(0); // from the tableInfo ArrayList, remove the first element which is a String of column headers
     }
+
     /**
      * @param filepath of the csv file
      * @return an ArrayList containing each line from the file as a separate String object
      */
     // it was decided to leave all rows as String for efficiency: not all rows will be used for data manipulation, so it's redundant to convert all of them to arrayList
-    private ArrayList<String> readFile(String filepath) {
-        ArrayList<String> fileData = new ArrayList<>();
-        try {
-            Scanner scanner = new Scanner(new File(filepath));
+    private List<String> readFile(String filepath) {
+        List<String> fileData = new ArrayList<>();
+        try (Scanner scanner = new Scanner(new File(filepath))){
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 if (!line.isBlank()) { // makes sure that there are no lines without any data (for example, somebody created a few new lines at the end of a file)
@@ -37,8 +36,9 @@ public class CSVHandler {
         return fileData;
     }
 
+
     private HashMap<String, Integer> extractColumnHeaders(String columnHeadersRow) {
-        String[] columnHeadersArray = columnHeadersRow.split(",");
+        String[] columnHeadersArray = splitRow(columnHeadersRow);
         HashMap<String, Integer> columnHeadersMap = new HashMap<>();
         int columnIndex = 0;
         for (String columnHeader : columnHeadersArray) {
@@ -48,35 +48,51 @@ public class CSVHandler {
         return columnHeadersMap;
     }
 
+    private boolean hasSpecificColumnValue(String dataRow, String columnName, String expectedValue) {
+        String value = findValueOfSpecificColumnInSpecificRow(dataRow, columnName);
+        return value != null && value.equals(expectedValue);
+    }
+
+    public String findValueOfSpecificColumnInSpecificRow(String dataRow, String columnName) {
+        String[] rowValues = splitRow(dataRow);
+        Integer columnIndex = columnHeaders.get(columnName);
+        if (columnIndex == null) {
+            return null;
+        }
+        return rowValues[columnIndex];
+    }
+
+    private String[] splitRow(String row) {
+        return row.split(CSV_DELIMITER);
+    }
+
     /**
-     * @param columnName name of a column
-     * @param value that needs to be found in that column
-     * @return String representing the row containing a specific value for a specific column
+     * @param columnValues a map containing column names and their corresponding values
+     * @return String representing the row containing specific values for specified columns
      */
-    public String findRowWithSpecificColumnValue(String columnName, String value) {
-        for (String dataRow : tableData) {
-            if (findValueOfSpecificColumn(dataRow, columnName).equals(value)) {
-                return dataRow;
+    public List<String> findRowsWithColumnValuesSpecified(Map<String, String> columnValues) {
+        ArrayList<String> foundRows = new ArrayList<>();
+        for (String row : tableData) {
+            if (hasAllColumnValues(row, columnValues)) {
+                foundRows.add(row);
             }
         }
-        return null; // identifies that there is no row with the specified value for the specified column
+        return foundRows.isEmpty() ? null : foundRows; // null means that there is no row with the specified values for the specified columns
     }
 
-    public String findValueOfSpecificColumn(String dataRow, String columnName) {
-        return dataRow.split(",")[columnHeaders.get(columnName)];
+    private boolean hasAllColumnValues(String dataRow, Map<String, String> columnValues) {
+        for (Map.Entry<String, String> entry : columnValues.entrySet()) {
+            String columnName = entry.getKey();
+            String expectedValue = entry.getValue();
+
+            if (!hasSpecificColumnValue(dataRow, columnName, expectedValue)) {
+                return false; // at least one condition is not satisfied
+            }
+        }
+        return true; // all conditions are satisfied
     }
 
-//    public static int determineColumnNumberByItsName(String columnHeader, String columnHeaderRow) {
-//        String[] columnHeadersArray = columnHeaderRow.split(",");
-//        for (int i = 0; i < columnHeadersArray.length; i++) {
-//            if (columnHeadersArray[i].equals(columnHeader)) {
-//                return i + 1;
-//            }
-//        }
-//        return -1; // The specified columnHeader is not in the table
-//    }
-
-    public ArrayList<String> getTableData() {
+    public List<String> getTableData() {
         return tableData;
     }
 
@@ -85,9 +101,13 @@ public class CSVHandler {
     }
 
     public static void main(String[] args) {
-        CSVHandler et4012 = new CSVHandler("./csvFiles/%s.csv".formatted("CS4013"));
-        System.out.println(et4012.getColumnHeaders());
-        System.out.println(et4012.getTableData());
-        System.out.println(et4012.findRowWithSpecificColumnValue("Grade", "C3"));
+        CSVHandler et4012 = new CSVHandler(String.format("./csvFiles/%s.csv", "StudentModulesTaken"));
+//        System.out.println(et4012.getColumnHeaders());
+//        System.out.println(et4012.getTableData());
+        Map<String, String> myMap = new HashMap<>();
+//        System.out.println(et4012.findRowsWithColumnValuesSpecified(myMap));
+        myMap.put("Semester", "1");
+        myMap.put("Start Year", "2023");
+        et4012.findRowsWithColumnValuesSpecified(myMap).forEach(System.out::println);
     }
 }
