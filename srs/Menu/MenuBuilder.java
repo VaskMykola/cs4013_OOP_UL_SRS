@@ -1,5 +1,5 @@
 package Menu;
-
+import utilities.Utils;
 
 public class MenuBuilder {
 
@@ -114,8 +114,10 @@ public class MenuBuilder {
     public static void loginMenu() {
         // TODO create additional fucntion to check data with data from db
         Menu loginMenu = new Menu("Login Menu");
-        loginMenu.addItem(new MenuItem("Login", () -> System.out.println("todo")));
+        loginMenu.addItem(new MenuItem("Login", Utils::userLogin));
+        loginMenu.addItem(new MenuItem("Register", () -> System.out.println("todo")));
         loginMenu.display();
+
     }
 
     public static void adminMenu() {

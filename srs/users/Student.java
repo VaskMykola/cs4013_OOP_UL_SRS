@@ -11,7 +11,7 @@ public class Student extends User {
     String[] myModules;
 
     Student() {
-        super();
+        super("admin", "admin", "admin");
     }
 
 
