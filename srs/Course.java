@@ -1,3 +1,5 @@
+//Change needed: need to let it impossible to add a module with semester except 1 or 2.
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -24,8 +26,8 @@ public class Course {
         this.courseDescription = description;
     }
 
-    public void editDuration(int duration) {
-        this.semester = duration;
+    public void editSemester(int semester) {
+        this.semester = semester;
     }
 
     public void readModulesFromFile(String filePath) {
