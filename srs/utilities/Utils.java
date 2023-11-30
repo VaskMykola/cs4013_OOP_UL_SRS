@@ -4,8 +4,7 @@ import Menu.CSVHandler;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Utils {
     private static final String[] ROLES = readRolesFromCSV();
@@ -44,9 +43,29 @@ public class Utils {
 
     public static boolean checkUser(String login, String password, String role) {
         // check if user exists in the users.csv file
-        CSVHandler userSCV = new CSVHandler("csvFiles/Users.csv");
-
-        return false;
+        CSVHandler userSCVcheck = new CSVHandler("csvFiles/Users.csv");
+        //one way but Alex made function "hasSpecificColumnValue" private so we can't use it
+//        for (String row : userSCVcheck.getTableData()) {
+//            if (userSCVcheck.hasSpecificColumnValue(row, "login", login) &&
+//                    userSCVcheck.hasSpecificColumnValue(row, "password", password) &&
+//                    userSCVcheck.hasSpecificColumnValue(row, "role", role)) {
+//                return true;
+//            }
+//        }
+        //another way
+        Map<String, String> user = new HashMap<>();
+        user.put("Login", login);
+        user.put("Password", password);
+        user.put("Role", role);
+        List<String> result = userSCVcheck.findRowsWithColumnValuesSpecified(user);
+        //TODO: remove this
+        System.out.println("==============LOG: checkUser()================");
+        System.out.println("result.size() = " + result.size());
+        for (String s : result) {
+            System.out.println(s);
+        }
+        System.out.println("==============LOG: checkUser()================");
+        return result.size() == 1;
     }
 
     public static String[] getRoles() {
