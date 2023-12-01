@@ -14,6 +14,7 @@ public class CSVHandler {
         tableData = readFile(filepath);
         columnHeaders = extractColumnHeaders(tableData.get(0)); // use the first row from the table to set column headers
         tableData.remove(0); // from the tableInfo ArrayList, remove the first element which is a String of column headers
+        Collections.sort(tableData);
     }
 
     /**
@@ -23,7 +24,7 @@ public class CSVHandler {
     // it was decided to leave all rows as String for efficiency: not all rows will be used for data manipulation, so it's redundant to convert all of them to arrayList
     private List<String> readFile(String filepath) {
         List<String> fileData = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new File(filepath))){
+        try (Scanner scanner = new Scanner(new File(filepath))) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 if (!line.isBlank()) { // makes sure that there are no lines without any data (for example, somebody created a few new lines at the end of a file)
@@ -92,22 +93,44 @@ public class CSVHandler {
         return true; // all conditions are satisfied
     }
 
+    public List<String> findDistinctValuesForSpecificColumn(List<String> rows, String columnName) {
+        List<String> distinctValuesForTheColumn = new ArrayList<>();
+        for (String row : rows) {
+            String value = findValueOfSpecificColumnInSpecificRow(row, columnName);
+            if (!distinctValuesForTheColumn.contains(value)) {
+                distinctValuesForTheColumn.add(value);
+            }
+        }
+        return distinctValuesForTheColumn;
+    }
+
+    public List<String> findDistinctValuesForSeveralSpecificColumns(List<String> rows, String[] columnNames) {
+        List<String> distinctValuesForSeveralSpecificColumns = new ArrayList<>();
+        for (String row : rows) {
+            StringBuilder combinationOfValues = new StringBuilder();
+            for (String columnName : columnNames) {
+                combinationOfValues.append(findValueOfSpecificColumnInSpecificRow(row, columnName)).append(",");
+            }
+            if (!distinctValuesForSeveralSpecificColumns.contains(combinationOfValues.toString().trim())) {
+                distinctValuesForSeveralSpecificColumns.add(combinationOfValues.toString().trim());
+            }
+        }
+        return distinctValuesForSeveralSpecificColumns;
+    }
+
     public List<String> getTableData() {
         return tableData;
     }
 
-    public HashMap<String, Integer> getColumnHeaders() {
+    public Map<String, Integer> getColumnHeaders() {
         return columnHeaders;
     }
 
     public static void main(String[] args) {
-        CSVHandler et4012 = new CSVHandler(String.format("./csvFiles/%s.csv", "StudentModulesTaken"));
-//        System.out.println(et4012.getColumnHeaders());
-//        System.out.println(et4012.getTableData());
-        Map<String, String> myMap = new HashMap<>();
-//        System.out.println(et4012.findRowsWithColumnValuesSpecified(myMap));
-        myMap.put("Semester", "1");
-        myMap.put("Start Year", "2023");
-        et4012.findRowsWithColumnValuesSpecified(myMap).forEach(System.out::println);
+        CSVHandler moduleStudentGradesTable = new CSVHandler(String.format("./csvFiles/%s.csv", "gradeBands1"));
+        Map<String, String> value = new HashMap<>();
+        value.put("Grade", "A1");
+//        System.out.println(moduleStudentGradesTable.determineGradeForModule("A1"));
+        System.out.println(moduleStudentGradesTable.findRowsWithColumnValuesSpecified(value));
     }
 }
