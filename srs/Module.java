@@ -15,9 +15,10 @@ class Module {
 
     @Override
     public String toString() {
-        return "Module | " +
-                "code - " + moduleCode +
-                " name - " + moduleName +
-                " semester - " + semester;
+        return "Module{" +
+                "moduleCode='" + moduleCode + '\'' +
+                ", moduleName='" + moduleName + '\'' +
+                ", semester=" + semester +
+                '}';
     }
 }

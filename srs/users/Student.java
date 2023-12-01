@@ -1,34 +1,27 @@
 package users;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Student extends User {
-    String group;
-    String programme;
-    String year;
-
-    String semester;
 
 
-    String[] myModules;
-
-    Student() {
-        super("admin", "admin", "admin");
-    }
-
-
-    public void showTranscript() {
-        // TODO function to generate a student transcript
+    public static String showTranscript(String studentID) {
         System.out.println("show a transcript selected");
+        return "transcript";
     }
 
     public void calculateQSA() {
-        // TODO function to calculate QSA
         System.out.println("calculate QSA selected");
     }
 
-    public void showStudentModules() {
-        // TODO function to show modules
+    public static List<String> showStudentModules(String studentID) {
+       List<String> modules = new ArrayList<String>();
         System.out.println("show modules selected");
+        return modules;
     }
+
+
 
 
 }

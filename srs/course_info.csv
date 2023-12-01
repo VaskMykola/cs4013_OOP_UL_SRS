@@ -1,9 +1,2 @@
-CourseCode, CourseName, Semester
-LM002, Bachelor of Arts, 2
-LM019, Bachelor of Science in Social Sciences, 2
-LM101, Bachelor of Medicine, 2
-LM104, Bachelor of Science in Psychology
-LM089, Bachelor of Science in Sport and Exercise Sciences, 2
-LM093, Bachelor of Science in Equine Science, 2
-LM116, Engineering (Common Entry), 2
-LM156, Bachelor of Science in Midwifery, 2
+CourseCode,CourseName,Duration,Subject area
+LM121,Computer Systems,4,Engineering

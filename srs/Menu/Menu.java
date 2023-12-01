@@ -37,7 +37,9 @@ class Menu {
                 System.out.println((i + 1) + ". " + items.get(i).label);
             }
             System.out.print("Choose an option (or 0 to exit): ");
+            // TODO handle non-integer input with try-catch
             int choice = scanner.nextInt();
+
             if (choice == 0) break;
             if (choice > 0 && choice <= items.size()) {
                 MenuItem selectedItem = items.get(choice - 1);

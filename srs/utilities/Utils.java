@@ -1,6 +1,7 @@
 package utilities;
 
 import Menu.CSVHandler;
+import Menu.MenuBuilder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -110,9 +111,31 @@ public class Utils {
     public static boolean userLogin() {
         String[] loginInfo = getLoginInfoFromUser();
         if (!checkUser(loginInfo[0], loginInfo[1], loginInfo[2])) {
+            System.out.println("Invalid login information. Please try again.");
             return false;
         }
-
+        System.out.println("Login successful.");
+        openUserMenu(loginInfo[2]);
         return true;
+    }
+
+    public static void openUserMenu(String role){
+        switch (role) {
+            case "admin":
+                MenuBuilder.adminMenu();
+                break;
+            case "student":
+                MenuBuilder.studentMenu();
+                break;
+            case "department":
+                MenuBuilder.departmentMenu();
+                break;
+            case "faculty":
+                MenuBuilder.facultyMenu();
+                break;
+            default:
+                break;
+        }
+
     }
 }
