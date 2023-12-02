@@ -4,7 +4,7 @@ import utilities.Utils;
 
 public class MenuBuilder {
 
-    public static void studentMenu(String studentID) {
+    public static void studentMenu() {
         Menu studentMenu = new Menu("Student Menu");
 
         studentMenu.addItem(new MenuItem("show a transcript",

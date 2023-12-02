@@ -43,17 +43,9 @@ public class Utils {
     }
 
     public static boolean checkUser(String login, String password, String role) {
-        // check if user exists in the users.csv file
+
         CSVHandler userSCVcheck = new CSVHandler("csvFiles/Users.csv");
-        //one way but Alex made function "hasSpecificColumnValue" private so we can't use it
-//        for (String row : userSCVcheck.getTableData()) {
-//            if (userSCVcheck.hasSpecificColumnValue(row, "login", login) &&
-//                    userSCVcheck.hasSpecificColumnValue(row, "password", password) &&
-//                    userSCVcheck.hasSpecificColumnValue(row, "role", role)) {
-//                return true;
-//            }
-//        }
-        //another way
+
         Map<String, String> user = new HashMap<>();
         user.put("Login", login);
         user.put("Password", password);
