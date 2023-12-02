@@ -107,11 +107,12 @@ public class Utils {
             return false;
         }
         System.out.println("Login successful.");
-        openUserMenu(loginInfo[2]);
+        openUserMenu(loginInfo);
         return true;
     }
 
-    public static void openUserMenu(String role){
+    public static void openUserMenu(String[] loginInfo) {
+        String role = loginInfo[2];
         switch (role) {
             case "admin":
                 MenuBuilder.adminMenu();
