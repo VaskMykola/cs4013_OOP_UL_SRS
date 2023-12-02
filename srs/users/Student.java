@@ -21,6 +21,11 @@ public class Student extends User {
         return modules;
     }
 
+    public static String viewProgrammeDetails(String studentID) {
+        System.out.println("view programme details selected");
+        return "programme details";
+    }
+
 
 
 

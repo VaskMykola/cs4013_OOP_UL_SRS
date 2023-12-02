@@ -113,12 +113,13 @@ public class Utils {
 
     public static void openUserMenu(String[] loginInfo) {
         String role = loginInfo[2];
+        String login = loginInfo[0];
         switch (role) {
             case "admin":
                 MenuBuilder.adminMenu();
                 break;
             case "student":
-                MenuBuilder.studentMenu();
+                MenuBuilder.studentMenu(getIDbyLogin(login));
                 break;
             case "department":
                 MenuBuilder.departmentMenu();
@@ -130,5 +131,13 @@ public class Utils {
                 break;
         }
 
+    }
+    public static String getIDbyLogin(String login) {
+        CSVHandler userSCVcheck = new CSVHandler("csvFiles/Users.csv");
+        Map<String, String> user = new HashMap<>();
+        user.put("Login", login);
+        List<String> result = userSCVcheck.findRowsWithColumnValuesSpecified(user);
+        String[] resultArray = result.get(0).split(",");
+        return resultArray[0];
     }
 }

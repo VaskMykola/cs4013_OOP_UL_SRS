@@ -1,5 +1,6 @@
 package Menu;
 
+import users.Student;
 import utilities.Utils;
 
 public class MenuBuilder {
@@ -7,13 +8,9 @@ public class MenuBuilder {
     public static void studentMenu(String studentID) {
         Menu studentMenu = new Menu("Student Menu");
 
-        studentMenu.addItem(new MenuItem("show a transcript",
-                // TODO function to generate a student transcript
-                () -> System.out.println("show a transcript selected")));
+        studentMenu.addItem(new MenuItem("show a transcript", () -> System.out.println(Student.showTranscript(studentID))));
 
-        studentMenu.addItem(new MenuItem("View programme details",
-                // TODO function to view programme details
-                () -> System.out.println("View programme details selected")));
+        studentMenu.addItem(new MenuItem("View programme details", () -> System.out.println(Student.viewProgrammeDetails(studentID))));
 
         studentMenu.addItem(new MenuItem("Profile info & settings",
                 // TODO function to view profile settings
