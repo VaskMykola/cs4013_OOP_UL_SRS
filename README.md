@@ -43,8 +43,8 @@ necessary) for the different types of programmes available in UL. The system sho
 able to identify students that do not meet the minimum academic standards for
 progression.
 
-Students should be able to review their own transcript. Faculty should be able to look up
-transcripts. Faculty should be able to submit results for their modules each year/semester.
+Students should be able to review their own transcript. users.Faculty should be able to look up
+transcripts. users.Faculty should be able to submit results for their modules each year/semester.
 Departments should be able to hold exam boards to review progression.
 All files associated with this application should be stored as csv files and a command line
 interface should be included.

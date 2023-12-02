@@ -3,7 +3,7 @@ package users;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student extends User {
+public class Student{
 
 
     public static String showTranscript(String studentID) {

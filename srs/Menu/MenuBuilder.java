@@ -12,47 +12,13 @@ public class MenuBuilder {
 
         studentMenu.addItem(new MenuItem("View programme details", () -> System.out.println(Student.viewProgrammeDetails(studentID))));
 
-        studentMenu.addItem(new MenuItem("Profile info & settings",
-                // TODO function to view profile settings
-                () -> System.out.println("Profile settings selected")));
-
-
-        studentMenu.addItem(new MenuItem("Module selection and other",
-                // TODO function to view module selection and other
-                () -> System.out.println("Module selection and other selected")));
-
-        // TODO subMenus
-
-
         studentMenu.display();
 
     }
 
-    public static void profileSettingMenu() {
-        // TODO  we will need to add a parameters to this function (ID, role...)
-        // i think that all roles should have profile setting so for now it will be separate menu
-
-
-        Menu profileSettingsMenu = new Menu("Profile Settings Menu");
-        profileSettingsMenu.addItem(new MenuItem("Change password",
-                // TODO function to change password
-                () -> System.out.println("Change password selected")));
-        profileSettingsMenu.addItem(new MenuItem("Change email",
-                // TODO function to change email
-                () -> System.out.println("Change email selected")));
-        profileSettingsMenu.addItem(new MenuItem("Change phone number",
-                // TODO function to change phone number
-                () -> System.out.println("Change phone number selected")));
-        profileSettingsMenu.addItem(new MenuItem("Change address",
-                // TODO function to change address
-                () -> System.out.println("Change address selected")));
-        profileSettingsMenu.addItem(new MenuItem("Change bank details",
-                // TODO function to change bank details
-                () -> System.out.println("Change bank details selected")));
-    }
 
     public static void departmentMenu() {
-        Menu departmentMenu = new Menu("Department Menu");
+        Menu departmentMenu = new Menu("users.Department Menu");
         Menu manageFacultyAndStuffMenu = new Menu("Manage faculty and stuff Menu");
 
         departmentMenu.addItem(new MenuItem("View department information",
@@ -96,14 +62,11 @@ public class MenuBuilder {
     }
 
     public static void facultyMenu() {
-        Menu facultyMenu = new Menu("Faculty Menu");
+        Menu facultyMenu = new Menu("users.Faculty Menu");
         facultyMenu.addItem(new MenuItem("View faculty information",
                 //TODO: function to view faculty information
                 () -> System.out.println("View faculty information selected")));
-        facultyMenu.addItem(new MenuItem("Display teaching assignments",
-                //TODO function to display teaching assignments
-                () -> System.out.println("Display teaching assignments selected")));
-        // TODO subMenus, and add more functionality to this one
+
     }
 
     public static void loginMenu() {
@@ -111,7 +74,6 @@ public class MenuBuilder {
         Menu loginMenu = new Menu("Login Menu");
 
         loginMenu.addItem(new MenuItem("Login", Utils::userLogin));
-        loginMenu.addItem(new MenuItem("Register", () -> System.out.println("todo")));
 
         loginMenu.display();
 
