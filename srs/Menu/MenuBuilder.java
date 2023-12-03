@@ -5,21 +5,21 @@ import utilities.Utils;
 
 public class MenuBuilder {
 
-    public static void studentMenu(String studentID) {
+    public static void studentMenu(String studentLogin) {
         Menu studentMenu = new Menu("Student Menu");
 
-        studentMenu.addItem(new MenuItem("show a transcript", () -> System.out.println(Student.showTranscript(studentID))));
+        studentMenu.addItem(new MenuItem("show a transcript", () -> System.out.println(Student.showTranscript(studentLogin))));
 
-        studentMenu.addItem(new MenuItem("View programme details", () -> System.out.println(Student.viewProgrammeDetails(studentID))));
+        studentMenu.addItem(new MenuItem("View programme details", () -> System.out.println(Student.viewProgrammeDetails(studentLogin))));
 
-        studentMenu.addItem(new MenuItem("View student modules", () -> System.out.println(Student.getStudentModules(studentID))));
+        studentMenu.addItem(new MenuItem("View student modules", () -> System.out.println(Student.getStudentModules(studentLogin))));
 
         studentMenu.display();
 
     }
 
 
-    public static void departmentMenu() {
+    public static void departmentMenu(String departmentLogin) {
         Menu departmentMenu = new Menu("users.Department Menu");
         Menu manageFacultyAndStuffMenu = new Menu("Manage faculty and stuff Menu");
 
@@ -63,7 +63,7 @@ public class MenuBuilder {
 
     }
 
-    public static void facultyMenu() {
+    public static void facultyMenu(String facultyLogin) {
         Menu facultyMenu = new Menu("users.Faculty Menu");
         facultyMenu.addItem(new MenuItem("View faculty information",
                 //TODO: function to view faculty information

@@ -9,10 +9,14 @@ import java.util.*;
 
 public class Utils {
     private static final String[] ROLES = readRolesFromCSV();
+    private static final String ROLES_FILE_LOCATION = "csvFiles/csvForRoles/roles.csv";
+    private static final String USR_FILE_LOCATION = "csvFiles/csvForRoles/users.csv";
+
+
 
     private static String[] readRolesFromCSV() {
         ArrayList<String> rolesList = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new File("csvFiles/roles.csv"))) {
+        try (Scanner scanner = new Scanner(new File(ROLES_FILE_LOCATION))) {
             scanner.nextLine(); // skip header line
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
@@ -30,22 +34,10 @@ public class Utils {
         return ROLES;
     }
 
-    public static boolean updatePassword(String userID, String newPass) {
-        return false;
-    }
-
-    public static String newUser(String role) {
-        return "";
-    }
-
-    public static boolean deleteUser(String userID) {
-        return false;
-    }
-
 
     public static boolean checkUser(String login, String password, String role) {
 
-        CSVHandler userSCVcheck = new CSVHandler("csvFiles/users.csv");
+        CSVHandler userSCVcheck = new CSVHandler(USR_FILE_LOCATION);
 
         Map<String, String> user = new HashMap<>();
         user.put("Login", login);
@@ -109,26 +101,18 @@ public class Utils {
                 MenuBuilder.adminMenu();
                 break;
             case "student":
-                MenuBuilder.studentMenu(getIDbyLogin(login));
+                MenuBuilder.studentMenu(login);
                 break;
             case "department":
-                MenuBuilder.departmentMenu();
+                MenuBuilder.departmentMenu(login);
                 break;
             case "faculty":
-                MenuBuilder.facultyMenu();
+                MenuBuilder.facultyMenu(login);
                 break;
             default:
                 break;
         }
 
     }
-    public static String getIDbyLogin(String login) {
-        CSVHandler userSCVcheck = new CSVHandler("csvFiles/students.csv");
-        Map<String, String> user = new HashMap<>();
-        user.put("Login", login);
-        List<String> result = userSCVcheck.findRowsWithColumnValuesSpecified(user);
-        String[] resultArray = result.get(0).split(",");
-        System.out.println(resultArray[0]);
-        return resultArray[0];
-    }
+
 }
