@@ -7,7 +7,7 @@ import java.util.*;
 public class CSVHandler {
     private static final String CSV_DELIMITER = ",";
     private final List<String> tableData;
-    private final HashMap<String, Integer> columnHeaders;
+    private final Map<String, Integer> columnHeaders;
 
 
     public CSVHandler(String filepath) {
@@ -38,9 +38,9 @@ public class CSVHandler {
     }
 
 
-    private HashMap<String, Integer> extractColumnHeaders(String columnHeadersRow) {
+    private Map<String, Integer> extractColumnHeaders(String columnHeadersRow) {
         String[] columnHeadersArray = splitRow(columnHeadersRow);
-        HashMap<String, Integer> columnHeadersMap = new HashMap<>();
+        Map<String, Integer> columnHeadersMap = new LinkedHashMap<>();
         int columnIndex = 0;
         for (String columnHeader : columnHeadersArray) {
             columnHeadersMap.put(columnHeader, columnIndex);
@@ -130,11 +130,11 @@ public class CSVHandler {
 
 
 
-    public static void main(String[] args) {
-        CSVHandler moduleStudentGradesTable = new CSVHandler(String.format("./csvFiles/%s.csv", "gradeBands1"));
-        Map<String, String> value = new HashMap<>();
-        value.put("Grade", "A1");
-//        System.out.println(moduleStudentGradesTable.determineGradeForModule("A1"));
-        System.out.println(moduleStudentGradesTable.findRowsWithColumnValuesSpecified(value));
-    }
+//    public static void main(String[] args) {
+//        CSVHandler moduleStudentGradesTable = new CSVHandler(String.format("./csvFiles/%s.csv", "gradeBands"));
+//        Map<String, String> value = new HashMap<>();
+//        value.put("Grade", "A1");
+////        System.out.println(moduleStudentGradesTable.determineGradeForModule("A1"));
+//        System.out.println(moduleStudentGradesTable.findRowsWithColumnValuesSpecified(value));
+//    }
 }

@@ -15,17 +15,16 @@ public class QCACalculator {
                                 gradeScheme.getColumnHeaders().get("Grade")), "QPV"));
     }
 
-    private static Map<String, String> findGradesForSpecificStudentForSpecificPeriod(String studentId, String startYearOfStudies, String semester) {
+    public static Map<String, String> findGradesForSpecificStudentForSpecificPeriod(String studentId, String academicYear, String semester) {
 
         Map<String, String> attributesForStudentDataTable = new HashMap<>();
         attributesForStudentDataTable.put("ID", studentId);
-        attributesForStudentDataTable.put("Academic Year", startYearOfStudies);
+        attributesForStudentDataTable.put("Academic Year", academicYear);
         attributesForStudentDataTable.put("Semester", semester);
         List<String> particularStudentInfo = studentInformation.findRowsWithColumnValuesSpecified(attributesForStudentDataTable);
 
         Map<String, String> studentGradesMap = new HashMap<>();
         for (String studentRecord : particularStudentInfo) {
-            String academicYear = studentInformation.findValueOfSpecificColumnInSpecificRow(studentRecord, "Academic Year");
             String module = studentInformation.findValueOfSpecificColumnInSpecificRow(studentRecord, "Module");
             CSVHandler moduleInfo = new CSVHandler(String.format("./csvFiles/modulesByAcademicYear/%s_%s.csv", module, academicYear));
             Map<String, String> attributesForModuleDataTable = new HashMap<>();
@@ -65,7 +64,7 @@ public class QCACalculator {
         attributes.put("ID", studentId);
         List<String> specificStudentData = studentInformation.findRowsWithColumnValuesSpecified(attributes);
         List<String> allStudyingPeriodsForTheStudent = studentInformation.findDistinctValuesForSeveralSpecificColumns(specificStudentData, new String[]{"Academic Year", "Semester"});
-        Map<String, Map<String, Double>> everyPeriodAndQCAForThisPeriod = new TreeMap<>();
+        Map<String, Map<String, Double>> everyPeriodAndQCAForThisPeriod = new LinkedHashMap<>();
         double sumOfAllPreviousQCAs = 0;
         int numberOfPeriods = 0;
         for (String studyingPeriod : allStudyingPeriodsForTheStudent) {
@@ -73,12 +72,13 @@ public class QCACalculator {
             String[] studyingYearAndStudyingSemester = studyingPeriod.split(",");
             String academicYear = studyingYearAndStudyingSemester[0];
             String semester = studyingYearAndStudyingSemester[1];
+//            System.out.println(findGradesForSpecificStudentForSpecificPeriod(studentId, academicYear, semester));
             double qca = calculateQCAForSpecificPeriod(studentId, academicYear, semester);
             sumOfAllPreviousQCAs += qca;
             double upToDateQCA = sumOfAllPreviousQCAs / numberOfPeriods;
 
             String key = String.format("Academic Year: %s, Semester: %s", academicYear.replace("_", "/"), semester);
-            Map<String, Double> values = new TreeMap<>();
+            Map<String, Double> values = new LinkedHashMap<>();
             values.put("Session", qca);
             values.put("To-Date", upToDateQCA);
             everyPeriodAndQCAForThisPeriod.put(key, values);
