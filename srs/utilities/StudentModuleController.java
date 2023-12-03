@@ -61,6 +61,7 @@ public class StudentModuleController {
             if(checkIfStudentShouldChooseOptionalModules(studentLogin, TEMPORARY[1], TEMPORARY[2])){
                 System.out.println("You should choose optional modules");
 
+
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());

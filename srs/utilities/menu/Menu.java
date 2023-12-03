@@ -1,4 +1,4 @@
-package Menu;
+package utilities.menu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ class Menu {
                 if (selectedItem.subMenu != null) {
                     selectedItem.subMenu.display();
                 } else {
-                    selectedItem.func_to_run.run();
+                    selectedItem.funcToRun.run();
                 }
             } else {
                 System.out.println("Invalid option. Try again.");

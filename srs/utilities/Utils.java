@@ -1,7 +1,6 @@
 package utilities;
 
-import Menu.CSVHandler;
-import Menu.RoleMainMenuBuilder;
+import utilities.menu.RoleMainMenuBuilder;
 
 import java.io.File;
 import java.io.FileNotFoundException;

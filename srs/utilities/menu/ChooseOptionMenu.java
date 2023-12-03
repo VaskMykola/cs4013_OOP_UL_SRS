@@ -1,4 +1,4 @@
-package Menu;
+package utilities.menu;
 
 import java.util.concurrent.atomic.AtomicReference;
 
