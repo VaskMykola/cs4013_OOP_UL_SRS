@@ -1,2 +1,2 @@
-FacultyId, FacultyName, FacultyDepartaments
-1, Faculty of Science and Engineering, FCE.csv
+FacultyLogin, FacultyName, FacultyDepartaments
+fce, Faculty of Science and Engineering, FCE.csv

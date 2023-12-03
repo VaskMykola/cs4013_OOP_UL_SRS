@@ -29,20 +29,21 @@ public class Student {
 
 
     public static String viewProgrammeDetails(String studentLogin) {
-        System.out.println("view programme details selected");
-        return "programme details";
+        return getStudentField(studentLogin, 4) + "\n"
+                + getStudentField(studentLogin, 5) + "\n"
+                + getStudentField(studentLogin, 6);
     }
 
-    public static String getStudentCourse(String studentLogin) {
+    public static String getStudentField(String studentLogin, int fieldIndex) {
         String course = "";
         try (Scanner scanner = new Scanner(new File(ALL_STUDENTS_FILE_LOCATION))) {
             scanner.nextLine(); // skip header line
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
                 if (!line.isEmpty()) {
-                    String studentLoginFromFile = line.split(",")[0];
+                    String studentLoginFromFile = line.split(",")[1];
                     if (studentLoginFromFile.equals(studentLogin)) {
-                        course = line.split(",")[1];
+                        course = line.split(",")[fieldIndex];
                     }
                 }
             }
@@ -53,4 +54,36 @@ public class Student {
     }
 
 
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

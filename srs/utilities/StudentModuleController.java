@@ -23,7 +23,9 @@ public class StudentModuleController {
 
     private static final String COURSES_MODULES_FILE_LOCATION = "csvFiles/csvForRoles/FacultyDepartments/departmentsCourses/CourseModules/";
 
-    private static final String[] TEMPORARY = {"ITCS", "1", "2", "mandatory"}; // TODO: remove this temporary variable
+
+    // TODO: remove this temporary variable, it's only for testing. replace each usage of it with the actual values,NEED to implement Year and Semester selection in the menu or other way how to deal with it
+    private static final String[] TEMPORARY = {"ITCS", "1", "2", "mandatory"};
 
 
     public static String getModulesFromCMfile(String courseCode, String year, String semester, String mandatoryOrOptional) {
@@ -89,7 +91,7 @@ public class StudentModuleController {
     public static boolean checkIfStudentShouldChooseOptionalModules(String studentLogin, String year, String semester) {
         try {
             File file = new File(COURSES_MODULES_FILE_LOCATION + "modules_"
-                    + Student.getStudentCourse(studentLogin) + "_" + year + "_" + semester + "_optional.csv");
+                    + Student.getStudentField(studentLogin, 4) + "_" + year + "_" + semester + "_optional.csv");
             return file.exists();
 
         } catch (Exception e) {
