@@ -1,2 +1,2 @@
-CourseId, CourseName, CourseModules
-1, Introduction to Computer Science, modules_ITCS_full.csv
+CourseCode, CourseName, CourseModules
+ITCS, Introduction to Computer Science, modules_ITCS

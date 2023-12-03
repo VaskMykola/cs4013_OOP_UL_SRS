@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Student {
     private static final String ALL_STUDENTS_FILE_LOCATION = "csvFiles/csvForRoles/students.csv";
-    private static final String MODULES_FILES_DIR_LOCATION = "csvFiles/csvForRoles/FacultyDepartments/departmentsCourses/CourseModules/";
+    private static final String MODULES_FILES_DIR_LOCATION = "csvFiles/csvForRoles/studentModules/";
 
 
 
@@ -14,7 +14,7 @@ public class Student {
 
 
 
-    public static String showTranscript(String studentID) {
+    public static String showTranscript(String studentLogin) {
         System.out.println("show a transcript selected");
         return "transcript";
     }
@@ -24,53 +24,30 @@ public class Student {
     }
 
     public static String getStudentModules(String studentLogin) {
-        List<String> modules = new ArrayList<>();
-
-
-        try (BufferedReader br = new BufferedReader(new FileReader(ALL_STUDENTS_FILE_LOCATION))) {
-
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] student = line.split(",");
-                if (student[1].equals(studentLogin)) {
-                    String modulesFile = student[6];
-                    modules.addAll(readModules(modulesFile));
-                    break;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String result = String.join("\n", modules);
-        return result;
-    }
-
-    private static List<String> readModules(String modulesFile) {
 
         List<String> modules = new ArrayList<>();
 
 
-        try (Scanner scanner = new Scanner(new File(MODULES_FILES_DIR_LOCATION + modulesFile))) {
+        try (Scanner scanner = new Scanner(new File(MODULES_FILES_DIR_LOCATION + studentLogin+ "_modules.csv"))) {
             scanner.nextLine(); // skip header line
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
                 if (!line.isEmpty()) {
                     String moduleCode = line.split(",")[0];
-                    String moduleName = line.split(",")[1];
-                    String moduleSemester = line.split(",")[2];
-                    modules.add(moduleCode + " - " + moduleName + " - Sem:" + moduleSemester);
+                    //String moduleName = line.split(",")[1];
+                    //String moduleSemester = line.split(",")[2];
+                    modules.add(moduleCode);//+ " - " + moduleName + " - Sem:" + moduleSemester);
                 }
             }
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
-
-        return modules;
+        String result = String.join("\n", modules);
+        return result;
     }
 
 
-    public static String viewProgrammeDetails(String studentID) {
+    public static String viewProgrammeDetails(String studentLogin) {
         System.out.println("view programme details selected");
         return "programme details";
     }
