@@ -1,7 +1,7 @@
 package utilities;
 
 import Menu.CSVHandler;
-import Menu.MenuBuilder;
+import Menu.RoleMainMenuBuilder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -98,21 +98,22 @@ public class Utils {
         String login = loginInfo[0];
         switch (role) {
             case "admin":
-                MenuBuilder.adminMenu();
+                RoleMainMenuBuilder.adminMenu();
                 break;
             case "student":
-                MenuBuilder.studentMenu(login);
+                RoleMainMenuBuilder.studentMenu(login);
                 break;
             case "department":
-                MenuBuilder.departmentMenu(login);
+                RoleMainMenuBuilder.departmentMenu(login);
                 break;
             case "faculty":
-                MenuBuilder.facultyMenu(login);
+                RoleMainMenuBuilder.facultyMenu(login);
                 break;
             default:
                 break;
         }
 
     }
+
 
 }

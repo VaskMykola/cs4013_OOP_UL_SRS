@@ -3,7 +3,7 @@ package Menu;
 import users.Student;
 import utilities.Utils;
 
-public class MenuBuilder {
+public class RoleMainMenuBuilder {
 
     public static void studentMenu(String studentLogin) {
         Menu studentMenu = new Menu("Student Menu");

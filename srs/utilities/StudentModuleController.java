@@ -1,5 +1,7 @@
 package utilities;
 
+import users.Student;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -56,6 +58,10 @@ public class StudentModuleController {
         try(FileWriter writer = new FileWriter(MODULES_FILES_DIR_LOCATION + studentLogin + "_modules.csv")) {
             writer.write("ModuleCode\n");
             writer.write(getMandatoryModules(TEMPORARY[0], TEMPORARY[1], TEMPORARY[2], TEMPORARY[3]));
+            if(checkIfStudentShouldChooseOptionalModules(studentLogin, TEMPORARY[1], TEMPORARY[2])){
+                System.out.println("You should choose optional modules");
+
+            }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -71,8 +77,16 @@ public class StudentModuleController {
         // TODO
     }
 
-    public static void checkIfStudentShouldChooseOptionalModules(String studentLogin) {
-        // TODO
+    public static boolean checkIfStudentShouldChooseOptionalModules(String studentLogin, String year, String semester) {
+        try {
+            File file = new File(COURSES_MODULES_FILE_LOCATION + "modules_"
+                    + Student.getStudentCourse(studentLogin) + "_" + year + "_" + semester + "_optional.csv");
+            return file.exists();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
     public static void main(String[] args) {

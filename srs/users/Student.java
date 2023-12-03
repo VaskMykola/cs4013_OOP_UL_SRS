@@ -52,6 +52,24 @@ public class Student {
         return "programme details";
     }
 
+    public static String getStudentCourse(String studentLogin) {
+        String course = "";
+        try (Scanner scanner = new Scanner(new File(ALL_STUDENTS_FILE_LOCATION))) {
+            scanner.nextLine(); // skip header line
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine().trim();
+                if (!line.isEmpty()) {
+                    String studentLoginFromFile = line.split(",")[0];
+                    if (studentLoginFromFile.equals(studentLogin)) {
+                        course = line.split(",")[1];
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        return course;
+    }
 
 
 

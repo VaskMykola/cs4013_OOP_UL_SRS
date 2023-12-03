@@ -4,22 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-// Represents a single menu item
 
-// Represents a menu with multiple items
 class Menu {
-    /**************************************
-     *      D O N ' T   T O U C H
-     *     /                       \
-     *    /    T H I S   F I L E   \
-     *   /                           \
-     *  /                             \
-     * /                               \
-     * ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
-     **************************************/
-
     List<MenuItem> items = new ArrayList<>();
     String title;
+    boolean exitRequested = false;
 
     public Menu(String title) {
         this.title = title;
@@ -31,16 +20,19 @@ class Menu {
 
     public void display() {
         Scanner scanner = new Scanner(System.in);
-        while (true) {
+        while (!exitRequested) {
             System.out.println(title);
             for (int i = 0; i < items.size(); i++) {
                 System.out.println((i + 1) + ". " + items.get(i).label);
             }
             System.out.print("Choose an option (or 0 to exit): ");
-            // TODO handle non-integer input with try-catch
+
             int choice = scanner.nextInt();
 
-            if (choice == 0) break;
+            if (choice == 0) {
+                exitRequested = true;
+                break;
+            }
             if (choice > 0 && choice <= items.size()) {
                 MenuItem selectedItem = items.get(choice - 1);
                 if (selectedItem.subMenu != null) {
@@ -53,6 +45,8 @@ class Menu {
             }
         }
     }
+
+    public void exit() {
+        exitRequested = true;
+    }
 }
-
-
