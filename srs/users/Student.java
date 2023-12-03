@@ -1,15 +1,19 @@
 package users;
 
+
+import enumsForCSV.studentsSCVFields;
+import utilities.CSVHandler;
 import utilities.StudentModuleController;
 
-import java.io.*;
-import java.util.*;
+import java.util.Map;
 
 public class Student {
     private Student() {
         throw new IllegalStateException("Student class");
     }
+
     private static final String ALL_STUDENTS_FILE_LOCATION = "csvFiles/csvForRoles/students.csv";
+    private static final CSVHandler allStudents = new CSVHandler(ALL_STUDENTS_FILE_LOCATION);
     private static final String MODULES_FILES_DIR_LOCATION = "csvFiles/csvForRoles/studentModules/";
 
 
@@ -29,32 +33,41 @@ public class Student {
 
 
     public static String viewProgrammeDetails(String studentLogin) {
-        return getStudentField(studentLogin, 4) + "\n"
-                + getStudentField(studentLogin, 5) + "\n"
-                + getStudentField(studentLogin, 6);
-    }
 
-    public static String getStudentField(String studentLogin, int fieldIndex) {
-        String course = "";
-        try (Scanner scanner = new Scanner(new File(ALL_STUDENTS_FILE_LOCATION))) {
-            scanner.nextLine(); // skip header line
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine().trim();
-                if (!line.isEmpty()) {
-                    String studentLoginFromFile = line.split(",")[1];
-                    if (studentLoginFromFile.equals(studentLogin)) {
-                        course = line.split(",")[fieldIndex];
-                    }
-                }
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-        return course;
+        return getStudentFaculty(studentLogin) + "\n" + getStudentDepartment(studentLogin) + "\n" + getStudentCourse(studentLogin);
     }
 
 
+    public static String getStudentInfo(String studentLogin, studentsSCVFields field) {
+        String studentRow = allStudents.findRowsWithColumnValuesSpecified(Map.of(studentsSCVFields.STUDENTLOGIN.getField(), studentLogin)).toString();
+        return allStudents.findValueOfSpecificColumnInSpecificRow(studentRow, field.getField());
+    }
 
+    // Usage examples
+    public static String getStudentFaculty(String studentLogin) {
+        return getStudentInfo(studentLogin, studentsSCVFields.STUDENTFACULTYCODE);
+    }
+
+    public static String getStudentDepartment(String studentLogin) {
+        return getStudentInfo(studentLogin, studentsSCVFields.STUDENTDEPARTMENTCODE);
+    }
+
+    public static String getStudentCourse(String studentLogin) {
+        return getStudentInfo(studentLogin, studentsSCVFields.STUDENTCOURSECODE);
+    }
+
+    public static String getStudentYear(String studentLogin) {
+        return getStudentInfo(studentLogin, studentsSCVFields.STUDENTYEAR);
+    }
+
+    public static String getStudentSemester(String studentLogin) {
+        return getStudentInfo(studentLogin, studentsSCVFields.STUDENTSEMESTER);
+    }
+
+
+    public static void main(String[] args) {
+        System.out.println(getStudentModules("s1"));
+    }
 }
 
 

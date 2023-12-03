@@ -1,107 +1,93 @@
+// TODO fucn to delete empty files, or files with only header
+// TODO fucn to catch exeptions if file in CM not exist or empty
 package utilities;
 
 import users.Student;
 import utilities.menu.ChooseOptionMenu;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Collectors;
 
 public class StudentModuleController {
 
     private StudentModuleController() {
-        throw new IllegalStateException("StudentModuleController class");
+        throw new UnsupportedOperationException("Utility class");
     }
 
-
-    // private static final String ALL_STUDENTS_FILE_LOCATION = "csvFiles/csvForRoles/students.csv";
     private static final String MODULES_FILES_DIR_LOCATION = "csvFiles/csvForRoles/studentModules/";
-
     private static final String COURSES_MODULES_FILE_LOCATION = "csvFiles/csvForRoles/FacultyDepartments/departmentsCourses/CourseModules/";
 
-
-    // TODO: remove this temporary variable, it's only for testing. replace each usage of it with the actual values,NEED to implement Year and Semester selection in the menu or other way how to deal with it
-    private static final String[] TEMPORARY = {"ITCS", "1", "2", "mandatory"};
-
-
     public static String getModulesFromCMfile(String courseCode, String year, String semester, String mandatoryOrOptional) {
-        List<String> modules = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new File(COURSES_MODULES_FILE_LOCATION + "modules_"
-                + courseCode + "_" + year + "_" + semester + "_" + mandatoryOrOptional + ".csv"))) {
-            scanner.nextLine(); // skip header line
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine().trim();
-                if (!line.isEmpty()) {
-                    modules.add(line);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-        return String.join("\n", modules);
+        String filePath = COURSES_MODULES_FILE_LOCATION + "modules_" + courseCode + "_" + year + "_" + semester + "_" + mandatoryOrOptional + ".csv";
+        return readFromFile(filePath);
     }
 
     public static String getStudentModules(String studentLogin) {
+        String filePath = MODULES_FILES_DIR_LOCATION + studentLogin + "_modules.csv";
+        String content = readFromFile(filePath);
 
-        List<String> modules = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new File(MODULES_FILES_DIR_LOCATION + studentLogin + "_modules.csv"))) {
-            scanner.nextLine(); // skip header line
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine().trim();
-                if (!line.isEmpty()) {
-                    modules.add(line);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-            System.out.println("we didn't find your modules file, so we will create it for you");
-            createStudentModulesFile(studentLogin, TEMPORARY[1], TEMPORARY[2]);
-            return getStudentModules(studentLogin); // TODO possible infinite loop, TEST IT billion times !!
+        if (content.isEmpty()) {
+            createStudentModulesFile(studentLogin);
+            content = readFromFile(filePath);
         }
-        return String.join("\n", modules);
+        return content;
     }
 
-    public static void createStudentModulesFile(String studentLogin, String year, String semester) {
-        //create file studentLogin_modules.csv
-        try (FileWriter writer = new FileWriter(MODULES_FILES_DIR_LOCATION + studentLogin + "_modules.csv")) {
-            writer.write("ModuleCode\n");
-            writer.write(getModulesFromCMfile(TEMPORARY[0], TEMPORARY[1], TEMPORARY[2], "mandatory"));
-            if (checkIfStudentShouldChooseOptionalModules(studentLogin, TEMPORARY[1], TEMPORARY[2])) {
-                System.out.println("You should choose optional modules");
-                List<String> chosen = ChooseOptionMenu.chooseManyOptionsMenu("choose module by module that you want to add, then exit",
-                        getModulesFromCMfile(TEMPORARY[0], TEMPORARY[1], TEMPORARY[2], "optional")
-                                .split("\n"));
-                for (String module : chosen) {
-                    writer.write(module + "\n");
-                }
-            }
-            System.out.println("Your modules file was created successfully");
+    private static String readFromFile(String filePath) {
+        try {
+            return Files.lines(Paths.get(filePath))
+                    .skip(1) // Skip header line
+                    .filter(line -> !line.trim().isEmpty())
+                    .collect(Collectors.joining("\n"));
         } catch (IOException e) {
-            System.out.println("An error occurred while creating your modules file");
-            System.out.println(e.getMessage());
+            System.out.println("Error reading file: " + filePath + ". " + e.getMessage());
+            return "";
         }
+    }
 
+    public static void createStudentModulesFile(String studentLogin) {
+        String filePath = MODULES_FILES_DIR_LOCATION + studentLogin + "_modules.csv";
+        try (FileWriter writer = new FileWriter(filePath)) {
+            writer.write("ModuleCode\n");
+            writeStudentModulesToFile(writer, studentLogin);
+        } catch (IOException e) {
+            System.out.println("Error creating modules file: " + e.getMessage());
+        }
+    }
 
+    private static void writeStudentModulesToFile(FileWriter writer, String studentLogin) throws IOException {
+        String studentYear = Student.getStudentYear(studentLogin);
+        String studentSemester = Student.getStudentSemester(studentLogin);
+        String studentCourse = Student.getStudentCourse(studentLogin);
+
+        writer.write(getModulesFromCMfile(studentCourse, studentYear, studentSemester, "mandatory"));
+        if (checkIfStudentShouldChooseOptionalModules(studentLogin, studentYear, studentSemester)) {
+            System.out.println("You should choose optional modules");
+            ChooseOptionMenu.chooseManyOptionsMenu("choose module by module that you want to add, then exit",
+                            getModulesFromCMfile(studentCourse, studentYear, studentSemester, "optional").split("\n"))
+                    .forEach(module -> writeModule(writer, module));
+        }
+    }
+
+    private static void writeModule(FileWriter writer, String module) {
+        try {
+            writer.write(module + "\n");
+        } catch (IOException e) {
+            System.out.println("Error writing module to file: " + e.getMessage());
+        }
     }
 
     public static boolean checkIfStudentShouldChooseOptionalModules(String studentLogin, String year, String semester) {
-        try {
-            File file = new File(COURSES_MODULES_FILE_LOCATION + "modules_"
-                    + Student.getStudentField(studentLogin, 4) + "_" + year + "_" + semester + "_optional.csv");
-            return file.exists();
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
+        String filePath = COURSES_MODULES_FILE_LOCATION + "modules_" + Student.getStudentCourse(studentLogin) + "_" + year + "_" + semester + "_optional.csv";
+        return new File(filePath).exists();
     }
 
-//    public static void main(String[] args) {
-//        createStudentModulesFile("s1234567");
-//        System.out.println(getStudentModules("s1234567"));
-//    }
+    public static void main(String[] args) {
+        String result = getModulesFromCMfile("ITCS", "1", "2", "mandatory");
+        System.out.println(result);
+    }
 }

@@ -1,7 +1,7 @@
 Login,Password,Role
 admin,admin,admin
-student1,student1,student
-student2,student2,student
-student3,student3,student
+s1,1,student
+s2,2,student
+s3,3,student
 dcs,1,department
 fce,1,faculty
