@@ -12,7 +12,7 @@ public class Utils {
 
     private static String[] readRolesFromCSV() {
         ArrayList<String> rolesList = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new File("csvFiles/Roles.csv"))) {
+        try (Scanner scanner = new Scanner(new File("csvFiles/roles.csv"))) {
             scanner.nextLine(); // skip header line
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
@@ -24,6 +24,10 @@ public class Utils {
             System.out.println(e.getMessage());
         }
         return rolesList.toArray(new String[0]);
+    }
+
+    public static String[] getRoles() {
+        return ROLES;
     }
 
     public static boolean updatePassword(String userID, String newPass) {
@@ -38,31 +42,17 @@ public class Utils {
         return false;
     }
 
-    public static boolean checkUser(String userID) {
-        return false;
-    }
 
     public static boolean checkUser(String login, String password, String role) {
 
-        CSVHandler userSCVcheck = new CSVHandler("csvFiles/Users.csv");
+        CSVHandler userSCVcheck = new CSVHandler("csvFiles/users.csv");
 
         Map<String, String> user = new HashMap<>();
         user.put("Login", login);
         user.put("Password", password);
         user.put("Role", role);
         List<String> result = userSCVcheck.findRowsWithColumnValuesSpecified(user);
-        //TODO: remove this
-        System.out.println("==============LOG: checkUser()================");
-        System.out.println("result.size() = " + result.size());
-        for (String s : result) {
-            System.out.println(s);
-        }
-        System.out.println("==============LOG: checkUser()================");
         return result.size() == 1;
-    }
-
-    public static String[] getRoles() {
-        return ROLES;
     }
 
     public static String[] getLoginInfoFromUser() {
@@ -133,11 +123,12 @@ public class Utils {
 
     }
     public static String getIDbyLogin(String login) {
-        CSVHandler userSCVcheck = new CSVHandler("csvFiles/Users.csv");
+        CSVHandler userSCVcheck = new CSVHandler("csvFiles/students.csv");
         Map<String, String> user = new HashMap<>();
         user.put("Login", login);
         List<String> result = userSCVcheck.findRowsWithColumnValuesSpecified(user);
         String[] resultArray = result.get(0).split(",");
+        System.out.println(resultArray[0]);
         return resultArray[0];
     }
 }

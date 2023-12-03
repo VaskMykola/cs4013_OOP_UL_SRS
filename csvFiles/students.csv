@@ -1,4 +1,0 @@
-Id, login, Name, Surname, CourseCode, Year, Modules, Phone, Email, Adress
-1, student1, Mykola, Vaskevytch, LM121, 2, LM121_2_stardartModules.csv, 123456789, 1@studentmail.ul.ie, Casteroy Limerick Ireland
-2, student2, bob, bobik, LM121, 2, LM121_2_stardartModules.csv, 123452369, 2@studentmail.ul.ie, Casteroy Limerick Ireland
-3, student3, chease, yellow, LM121, 2, LM121_2_stardartModules.csv, 163256789, 3@studentmail.ul.ie, Casteroy Limerick Ireland

@@ -78,7 +78,7 @@ public class CSVHandler {
                 foundRows.add(row);
             }
         }
-        // HERE WE SHOULD SORT OUR ARRAY
+
         return foundRows.isEmpty() ? null : foundRows; // null means that there is no row with the specified values for the specified columns
     }
 

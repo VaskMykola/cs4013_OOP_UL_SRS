@@ -1,0 +1,2 @@
+DepartmentId, DepartmentName, DepartmentCourses
+1, Department of Computer Science, courses_DCS.csv

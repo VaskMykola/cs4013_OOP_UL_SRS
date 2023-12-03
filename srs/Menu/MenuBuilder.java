@@ -12,6 +12,8 @@ public class MenuBuilder {
 
         studentMenu.addItem(new MenuItem("View programme details", () -> System.out.println(Student.viewProgrammeDetails(studentID))));
 
+        studentMenu.addItem(new MenuItem("View student modules", () -> System.out.println(Student.getStudentModules(studentID))));
+
         studentMenu.display();
 
     }
