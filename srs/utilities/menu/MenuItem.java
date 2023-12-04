@@ -1,40 +1,39 @@
 package utilities.menu;
 
-import java.util.function.Consumer;
-import java.util.function.Function;
-
+/**
+ * Represents a single item in a menu.
+ * <p>
+ * Each MenuItem has a label to display and an associated action that can be
+ * either a {@link Runnable} to execute or a submenu to display.
+ */
 class MenuItem {
+    /**
+     * The label of the menu item, displayed in the menu.
+     */
     String label;
-    Consumer<Object[]> consumer;
-    Function<Object[], Object> function;
 
+    /**
+     * The function to be executed when this menu item is selected.
+     * This can be any {@link Runnable} action.
+     */
     Runnable funcToRun;
+
+    /**
+     * An optional submenu associated with this menu item.
+     * If not null, selecting this item will display the submenu.
+     */
     Menu subMenu;
 
-        public MenuItem(String label, Runnable funcToRun) {
+    /**
+     * Constructs a new MenuItem with the specified label and action.
+     * <p>
+     * This constructor is used for menu items that perform an action when selected.
+     *
+     * @param label     The text to be displayed for this menu item.
+     * @param funcToRun The {@link Runnable} action to be executed when this item is selected.
+     */
+    public MenuItem(String label, Runnable funcToRun) {
         this.label = label;
         this.funcToRun = funcToRun;
-    }
-    public MenuItem(String label, Consumer<Object[]> consumer) {
-        this.label = label;
-        this.consumer = consumer;
-    }
-
-    public MenuItem(String label, Function<Object[], Object> function) {
-        this.label = label;
-        this.function = function;
-    }
-
-    public MenuItem(String label, Menu subMenu) {
-        this.label = label;
-        this.subMenu = subMenu;
-    }
-
-    public void execute(Object... args) {
-        if (consumer != null) {
-            consumer.accept(args);
-        } else if (function != null) {
-            function.apply(args);
-        }
     }
 }

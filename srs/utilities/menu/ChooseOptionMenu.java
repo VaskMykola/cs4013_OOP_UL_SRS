@@ -1,11 +1,32 @@
 package utilities.menu;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-
+/**
+ * This utility class provides a method to create and display a menu for choosing one option.
+ */
 public class ChooseOptionMenu {
+
+    /**
+     * Private constructor to prevent instantiation of this utility class.
+     *
+     * @throws IllegalStateException if an attempt is made to instantiate this class
+     */
+    private ChooseOptionMenu() {
+        throw new IllegalStateException("Utility class");
+    }
+
+    /**
+     * Displays a menu with a list of options and allows the user to choose one.
+     * <p>
+     * This method creates a menu with the given label and a set of options.
+     * The user's choice is captured and returned.
+     * </p>
+     *
+     * @param label   The label for the menu.
+     * @param options An array of options that will be displayed in the menu.
+     * @return The selected option as a String. Returns null if no option is selected.
+     */
     public static String chooseOneOptionMenu(String label, String[] options) {
         Menu chooseOptionMenu = new Menu(label);
         AtomicReference<String> selectedOption = new AtomicReference<>();
@@ -20,30 +41,5 @@ public class ChooseOptionMenu {
         chooseOptionMenu.display();
 
         return selectedOption.get();
-    }
-
-    public static List<String> chooseManyOptionsMenu(String label, String[] options) {
-        Menu chooseOptionMenu = new Menu(label);
-        List<String> selectedOptions = new ArrayList<>();
-
-        for (String option : options) {
-            chooseOptionMenu.addItem(new MenuItem(option, () -> {
-                // Check if the option is already in selectedOptions before adding
-                if (!selectedOptions.contains(option)) {
-                    selectedOptions.add(option);
-                }
-            }));
-        }
-
-        chooseOptionMenu.display();
-
-        return selectedOptions;
-    }
-
-
-    public static void main(String[] args) {
-        String[] options = {"Option 1", "Option 2", "Option 3"};
-        List<String> selectedOption = chooseManyOptionsMenu("Choose an option", options);
-        System.out.println("Selected option: " + selectedOption);
     }
 }

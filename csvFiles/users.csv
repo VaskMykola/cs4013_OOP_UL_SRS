@@ -3,5 +3,5 @@ admin,admin,admin
 s1,1,student
 s2,2,student
 s3,3,student
-dcs,1,department
-fce,1,faculty
+CSIS,1,department
+FSE,1,faculty
