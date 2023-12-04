@@ -59,12 +59,12 @@ public class QCACalculator {
         return total / studentModulesTakenAndQpvsForThem.size();
     }
 
-    public static Map<String, Map<String, Double>> calculateQCAForEveryStudyingPeriod(String studentId) {
+    public static Map<String, Map<String, String>> calculateQCAForEveryStudyingPeriod(String studentId) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("ID", studentId);
         List<String> specificStudentData = studentInformation.findRowsWithColumnValuesSpecified(attributes);
         List<String> allStudyingPeriodsForTheStudent = studentInformation.findDistinctValuesForSeveralSpecificColumns(specificStudentData, new String[]{"Academic Year", "Semester"});
-        Map<String, Map<String, Double>> everyPeriodAndQCAForThisPeriod = new LinkedHashMap<>();
+        Map<String, Map<String, String>> everyPeriodAndQCAForThisPeriod = new LinkedHashMap<>();
         double sumOfAllPreviousQCAs = 0;
         int numberOfPeriods = 0;
         for (String studyingPeriod : allStudyingPeriodsForTheStudent) {
@@ -78,9 +78,9 @@ public class QCACalculator {
             double upToDateQCA = sumOfAllPreviousQCAs / numberOfPeriods;
 
             String key = String.format("Academic Year: %s, Semester: %s", academicYear.replace("_", "/"), semester);
-            Map<String, Double> values = new LinkedHashMap<>();
-            values.put("Session", qca);
-            values.put("To-Date", upToDateQCA);
+            Map<String, String> values = new LinkedHashMap<>();
+            values.put("Session", String.format("%.2f", qca));
+            values.put("To-Date", String.format("%.2f", upToDateQCA));
             everyPeriodAndQCAForThisPeriod.put(key, values);
         }
         return everyPeriodAndQCAForThisPeriod;
