@@ -2,10 +2,26 @@ package utilities;
 
 import java.util.*;
 
+/**
+ * The `QCACalculator` class provides methods for calculating the Quality Credit Average (QCA)
+ * for specific students and studying periods based on their grades.
+ */
 public class QCACalculator {
+    /**
+     * Represents the grade scheme data.
+     */
     private static final CSVHandler gradeScheme = new CSVHandler(String.format("./csvFiles/%s.csv", "gradeBands"));
+    /**
+     * Represents the student information data.
+     */
     private static final CSVHandler studentInformation = new CSVHandler(String.format("./csvFiles/%s.csv", "StudentModulesTaken"));
 
+    /**
+     * Determines the Quality Point Value (QPV) for a given grade.
+     *
+     * @param grade The grade for which QPV needs to be determined.
+     * @return The Quality Point Value (QPV) corresponding to the given grade.
+     */
     private static double determineQPVForModuleGivenGrade(String grade) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("Grade", grade);
@@ -15,6 +31,14 @@ public class QCACalculator {
                                 gradeScheme.getColumnHeaders().get("Grade")), "QPV"));
     }
 
+    /**
+     * Finds the grades for a specific student in a given academic year and semester.
+     *
+     * @param studentId    The ID of the student.
+     * @param academicYear The academic year.
+     * @param semester     The semester.
+     * @return A map containing module names and their corresponding grades for the specified student.
+     */
     public static Map<String, String> findGradesForSpecificStudentForSpecificPeriod(String studentId, String academicYear, String semester) {
 
         Map<String, String> attributesForStudentDataTable = new HashMap<>();
@@ -37,6 +61,12 @@ public class QCACalculator {
         return studentGradesMap;
     }
 
+    /**
+     * Determines the Quality Point Values (QPV) for a collection of modules and grades.
+     *
+     * @param gradesForSomeModules A map containing module names and their corresponding grades.
+     * @return A map containing module names and their corresponding Quality Point Values (QPV).
+     */
     private static Map<String, Double> determineQPVForSeveralModules(Map<String, String> gradesForSomeModules) {
         Map<String, Double> qpvsForTheModules = new HashMap<>();
         for (Map.Entry<String, String> moduleAndGradeForIt : gradesForSomeModules.entrySet()) {
@@ -46,12 +76,17 @@ public class QCACalculator {
         return qpvsForTheModules;
     }
 
+    /**
+     * Calculates the Quality Credit Average (QCA) for a specific student in a given academic year and semester.
+     *
+     * @param studentId    The ID of the student.
+     * @param academicYear The academic year.
+     * @param semester     The semester.
+     * @return The calculated Quality Credit Average (QCA) for the specified student in the given period.
+     */
     public static double calculateQCAForSpecificPeriod(String studentId, String academicYear, String semester) {
-
         Map<String, String> studentModulesTakenAndGradesForThem = findGradesForSpecificStudentForSpecificPeriod(studentId, academicYear, semester);
-//        System.out.println(studentModulesTakenAndGradesForThem);
         Map<String, Double> studentModulesTakenAndQpvsForThem = determineQPVForSeveralModules(studentModulesTakenAndGradesForThem);
-//        System.out.println(studentModulesTakenAndQpvsForThem);
         double total = 0;
         for (String module : studentModulesTakenAndQpvsForThem.keySet()) {
             total += studentModulesTakenAndQpvsForThem.get(module);
@@ -59,6 +94,12 @@ public class QCACalculator {
         return total / studentModulesTakenAndQpvsForThem.size();
     }
 
+    /**
+     * Calculates the Quality Credit Average (QCA) for every studying period of a specific student.
+     *
+     * @param studentId The ID of the student.
+     * @return A map containing every studying period and its corresponding QCA for the specified student.
+     */
     public static Map<String, Map<String, String>> calculateQCAForEveryStudyingPeriod(String studentId) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("ID", studentId);
@@ -72,7 +113,6 @@ public class QCACalculator {
             String[] studyingYearAndStudyingSemester = studyingPeriod.split(",");
             String academicYear = studyingYearAndStudyingSemester[0];
             String semester = studyingYearAndStudyingSemester[1];
-//            System.out.println(findGradesForSpecificStudentForSpecificPeriod(studentId, academicYear, semester));
             double qca = calculateQCAForSpecificPeriod(studentId, academicYear, semester);
             sumOfAllPreviousQCAs += qca;
             double upToDateQCA = sumOfAllPreviousQCAs / numberOfPeriods;
