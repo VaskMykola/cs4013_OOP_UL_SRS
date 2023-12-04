@@ -18,6 +18,7 @@ public class Main {
      * @param args command line arguments passed to the application (not used in this application)
      */
     public static void main(String[] args) {
+        System.out.printf("For testing purposes here is list of registered users\nLogin, Password, Role\n22310975, 1, student\n22331549, 2, student\nCSIS, 1, department\n\n");
         RoleMainMenuBuilder.loginMenu();
     }
 
