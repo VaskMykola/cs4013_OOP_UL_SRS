@@ -18,8 +18,8 @@ involves design and documentation.
 
 - [ ] A document outlining the Class Responsibility Collaboration (CRC) cards. These
 can be created in a word document.
-- [ ] A UML class diagram showing the relationships between the classes.
-- [ ] Documentation for the software generated using the javadoc utility and a help file
+- [x] A UML class diagram showing the relationships between the classes.
+- [x] Documentation for the software generated using the javadoc utility and a help file
 describing briefly how to run the application.
 - [x] The source code for the system where each Java class is stored in a separate file.
 - [x] Any csv files that are required by the system should also be included.
