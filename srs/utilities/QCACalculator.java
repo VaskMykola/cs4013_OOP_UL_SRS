@@ -85,14 +85,5 @@ public class QCACalculator {
         }
         return everyPeriodAndQCAForThisPeriod;
     }
-
-    public static void main(String[] args) {
-//        System.out.println(QCACalculator.determineQPVForModuleGivenGrade("F"));
-//        System.out.println(QCACalculator.findAllGradesForSpecificStudent("22310975"));
-//        System.out.println(QCACalculator.determineQPVForSeveralModules(QCACalculator.findAllGradesForSpecificStudent("22310975")));
-        System.out.println(calculateQCAForEveryStudyingPeriod("22331549"));
-        System.out.println(calculateQCAForEveryStudyingPeriod("22310975"));
-    }
-
 }
 

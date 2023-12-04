@@ -54,7 +54,7 @@ public class CSVHandler {
         return value != null && value.equals(expectedValue);
     }
 
-    public String findValueOfSpecificColumnInSpecificRow(String dataRow, String columnName)  {
+    public String findValueOfSpecificColumnInSpecificRow(String dataRow, String columnName) {
         String[] rowValues = splitRow(dataRow);
         Integer columnIndex = columnHeaders.get(columnName);
         if (columnIndex == null) {
@@ -128,13 +128,4 @@ public class CSVHandler {
         return columnHeaders;
     }
 
-
-
-//    public static void main(String[] args) {
-//        CSVHandler moduleStudentGradesTable = new CSVHandler(String.format("./csvFiles/%s.csv", "gradeBands"));
-//        Map<String, String> value = new HashMap<>();
-//        value.put("Grade", "A1");
-////        System.out.println(moduleStudentGradesTable.determineGradeForModule("A1"));
-//        System.out.println(moduleStudentGradesTable.findRowsWithColumnValuesSpecified(value));
-//    }
 }
