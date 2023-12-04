@@ -1,9 +1,10 @@
 package utilities;
 
-import utilities.CSVHandler;
+
 import utilities.menu.ChooseOptionMenu;
 
-import java.awt.*;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,10 +28,9 @@ public class StudentUtils {
      * Shows the academic transcript for a specified student.
      *
      * @param studentLogin The unique login ID of the student.
-     * @return A String representation of the student's academic transcript.
      */
-    public static String showTranscript(String studentLogin) {
-        return "Transcript for student: " + studentLogin;
+    public static void showTranscript(String studentLogin) {
+        TranscriptManager.showTranscript(studentLogin);
     }
 
     /**

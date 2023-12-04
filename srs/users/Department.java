@@ -21,10 +21,8 @@ public class Department {
 
     /**
      * Retrieves the transcript of a student from this department.
-     *
-     * @return The transcript of a selected student from the department.
      */
-    public String getTranscriptOfStudentFromThisDepartment() {
-        return StudentUtils.showTranscript(StudentUtils.selectStudentFromList(this.studentList));
+    public void getTranscriptOfStudentFromThisDepartment() {
+        StudentUtils.showTranscript(StudentUtils.selectStudentFromList(this.studentList));
     }
 }

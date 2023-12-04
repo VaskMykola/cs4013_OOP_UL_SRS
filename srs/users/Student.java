@@ -21,10 +21,8 @@ public class Student {
     /**
      * Retrieves the academic transcript of this student.
      * Delegates to StudentUtils to obtain the transcript based on the student's login ID.
-     *
-     * @return A String representation of the student's academic transcript.
      */
-    public String showTranscript() {
-        return StudentUtils.showTranscript(this.studentLogin);
+    public void showTranscript() {
+        StudentUtils.showTranscript(this.studentLogin);
     }
 }

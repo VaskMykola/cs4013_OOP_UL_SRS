@@ -32,8 +32,8 @@ public class RoleMainMenuBuilder {
     public static void studentMenu(Student student) {
         Menu studentMenu = new Menu("StudentUtils Menu");
         studentMenu.addItem(new MenuItem("View Transcript", () -> {
-            String transcript = student.showTranscript();
-            System.out.println(transcript);
+            student.showTranscript();
+
         }));
 
         studentMenu.display();
@@ -52,8 +52,8 @@ public class RoleMainMenuBuilder {
 
         departmentMenu.addItem(new MenuItem("View Transcript of a Specific Student",
                 () -> {
-                    String transcript = department.getTranscriptOfStudentFromThisDepartment();
-                    System.out.println(transcript);
+                    department.getTranscriptOfStudentFromThisDepartment();
+
                 }));
 
         departmentMenu.display();

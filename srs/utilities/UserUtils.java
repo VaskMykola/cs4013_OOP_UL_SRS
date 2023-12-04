@@ -1,8 +1,4 @@
-/**
- * The `UserUtils` class provides utility methods for user authentication and login,
- * as well as functions to open user-specific menus based on their roles.
- * It interacts with user data stored in a CSV file.
- */
+
 package utilities;
 
 import users.Department;
@@ -11,6 +7,11 @@ import utilities.menu.RoleMainMenuBuilder;
 
 import java.util.*;
 
+/**
+ * The `UserUtils` class provides utility methods for user authentication and login,
+ * as well as functions to open user-specific menus based on their roles.
+ * It interacts with user data stored in a CSV file.
+ */
 public class UserUtils {
 
     private UserUtils() {
